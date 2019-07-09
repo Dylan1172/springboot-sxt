@@ -3,6 +3,11 @@
 !**/src/main/**
 !**/src/test/**
 
+### MAVEN ###
+/mvnw
+/mvnw.cmd
+/.mvn
+
 ### STS ###
 .apt_generated
 .classpath
@@ -29,3 +34,4 @@ build/
 
 ### VS Code ###
 .vscode/
+
