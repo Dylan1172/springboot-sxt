@@ -7,6 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 /**
  * 使用WebMvcConfigurerAdapter可以来扩展SpringMVC的功能
+ * 方法过期了，没有试出来
  *
  * @Author Dylan.W
  * @Date 2019/7/9 23:03
