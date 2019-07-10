@@ -34,6 +34,11 @@ public class HelloController {
         }
     }
 
+    /**
+     * 清除登录信息
+     *
+     * @param session
+     */
     @GetMapping("/logout")
     public void logout(HttpSession session) {
         session.removeAttribute("user");
