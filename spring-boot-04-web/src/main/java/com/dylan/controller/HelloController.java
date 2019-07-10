@@ -1,15 +1,42 @@
 package com.dylan.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import com.dylan.entity.User;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+import javax.servlet.http.HttpSession;
+
+@RestController
 public class HelloController {
 
-    @ResponseBody
-    @GetMapping("/hello")
+    @GetMapping(value = "/hello")
     public String hello() {
-        return "Hello,Spring Boot";
+        return "Hello,Spring Boot!";
     }
+
+    /**
+     * 模拟登录
+     *
+     * @param userName
+     * @param password
+     * @param session
+     * @return
+     */
+    @PostMapping(value = "login")
+    public String login(@RequestParam(value = "userName", required = true) String userName,
+                        @RequestParam(value = "password", required = true) String password,
+                        HttpSession session) {
+        if ("Dylan.W".equals(userName) && "123456".equals(password)) {
+            User user = new User(userName, password);
+            session.setAttribute("user", user);
+            return "success";
+        } else {
+            return "fail";
+        }
+    }
+
+    @GetMapping("/logout")
+    public void logout(HttpSession session) {
+        session.removeAttribute("user");
+    }
+
 }

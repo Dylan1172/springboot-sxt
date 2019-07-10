@@ -17,17 +17,18 @@ import java.util.Locale;
 public class MyLocaleResolver implements LocaleResolver {
 
     /**
-     * 处理请求路径传递过来的参数：l=zh_CN
+     * 处理请求路径传递过来的参数：msg=zh_CN
      *
      * @param request
      * @return 国际化Locale（区域信息对象）
      */
     @Override
     public Locale resolveLocale(HttpServletRequest request) {
-        String l = request.getParameter("l");
+        System.out.println("*****区域信息解析器*****");
+        String msg = request.getParameter("msg");
         Locale locale = Locale.getDefault();
-        if (!StringUtils.isEmpty(locale)) {
-            String split[] = l.split("_");
+        if (!StringUtils.isEmpty(msg)) {
+            String split[] = msg.split("_");
             locale = new Locale(split[0], split[1]);
         }
         return locale;
