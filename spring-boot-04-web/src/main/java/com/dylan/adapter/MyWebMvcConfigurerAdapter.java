@@ -56,14 +56,18 @@ public class MyWebMvcConfigurerAdapter implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 不拦截的请求或页面
-        List<String> stringList = new ArrayList<String>();
-        stringList.add("/login");// 登录
-        stringList.add("/logout");// 登出
-        stringList.add("/");
-        stringList.add("/index");
-        stringList.add("/index.html");
+        List<String> excludePathList = new ArrayList<String>();
+        excludePathList.add("/login");// 登录
+        excludePathList.add("/logout");// 登出
+
+        excludePathList.add("/public/**");
+        excludePathList.add("/static/**");
+
+        excludePathList.add("/");
+        excludePathList.add("/index");
+        excludePathList.add("/index.html");
         // '/**' 拦截所有页面,去除不拦截的页面
         registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**")
-                .excludePathPatterns(stringList);
+                .excludePathPatterns(excludePathList);
     }
 }
