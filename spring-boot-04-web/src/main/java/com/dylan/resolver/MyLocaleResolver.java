@@ -1,4 +1,4 @@
-package com.dylan.component;
+package com.dylan.resolver;
 
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.LocaleResolver;

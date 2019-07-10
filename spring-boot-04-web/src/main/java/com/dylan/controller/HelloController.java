@@ -1,6 +1,7 @@
 package com.dylan.controller;
 
 import com.dylan.entity.User;
+import com.dylan.exception.MyException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -8,8 +9,16 @@ import javax.servlet.http.HttpSession;
 @RestController
 public class HelloController {
 
-    @GetMapping(value = "/hello")
-    public String hello() {
+    @GetMapping(value = "/hello") // 正常请求
+//    @PostMapping(value = "/hello") // 模拟400错误
+    public String hello(@RequestParam(value = "name", required = false) String name) {
+        if ("ex".equals(name)) {
+            // 模拟自定义异常
+            throw new MyException();
+        } else if ("500".equals(name)) {
+            // 模拟500错误
+            System.out.println(1 / 0);
+        }
         return "Hello,Spring Boot!";
     }
 

@@ -16,6 +16,11 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <!--thymeleaf 3的导入-->
+<!--        <thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>-->
+        <!--布局功能支持 同时支持thymeleaf3主程序 layout2.0以上版本  -->
+        <!--布局功能支持 同时支持thymeleaf2主程序 layout1.0以上版本  -->
+<!--        <thymeleaf-layout-dialect.version>2.3.0</thymeleaf-layout-dialect.version>-->
     </properties>
 
     <dependencies>
@@ -30,11 +35,27 @@
             <scope>test</scope>
         </dependency>
 
+        <!--引入thymeleaf-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-thymeleaf</artifactId>-->
+<!--        </dependency>-->
+
+
         <!--引入jquery-webjar-->
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>jquery</artifactId>
             <version>3.4.1</version>
+        </dependency>
+
+
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.18</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

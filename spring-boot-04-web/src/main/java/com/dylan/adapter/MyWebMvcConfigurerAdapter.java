@@ -1,7 +1,6 @@
 package com.dylan.adapter;
 
-import com.dylan.component.MyLocaleResolver;
-import com.dylan.interceptor.LoginHandlerInterceptor;
+import com.dylan.resolver.MyLocaleResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.LocaleResolver;
@@ -67,7 +66,7 @@ public class MyWebMvcConfigurerAdapter implements WebMvcConfigurer {
         excludePathList.add("/index");
         excludePathList.add("/index.html");
         // '/**' 拦截所有页面,去除不拦截的页面
-        registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**")
-                .excludePathPatterns(excludePathList);
+//        registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**")
+//                .excludePathPatterns(excludePathList);
     }
 }
