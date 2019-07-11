@@ -1,13 +1,10 @@
-package com.dylan.handler;
+package com.dylan.exception;
 
-import com.dylan.exception.MyException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 全局捕获异常
@@ -31,11 +28,8 @@ public class GlobalExceptionHandler {
     public String handleException(Exception e, HttpServletRequest request) {
         System.out.println("*****自定义异常捕捉****");
         e.printStackTrace();
-        Map<String, Object> map = new HashMap<>();
         //传入我们自己的错误状态码  4xx 5xx，否则就不会进入定制错误页面的解析流程
         request.setAttribute("javax.servlet.error.status_code", 401);
-        map.put("code", 400);
-        map.put("message", e.getMessage());
         // 重定向
 //        return "redirect:/error";
         //转发到/error
