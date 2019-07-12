@@ -1,0 +1,33 @@
+spring:
+  datasource:
+    url: jdbc:mysql://118.24.100.209:4000/jit_ssm?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: P@ssw0rdjit1230
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 配置druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+
+    # 配置drui相关属性
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    # 配置监控统计拦截的filters,去掉监控界面sql无法统计，‘wall’用于防火墙 ,log4j
+    filters: stat,wall,log4j
+    maxPoolPreparedStatementPerConnectionSize: 20
+    userGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+
+#    hikari:
+
+#    schema:
+#      - classpath:department.sql
+server:
+  port: 8080
