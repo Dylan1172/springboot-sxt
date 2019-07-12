@@ -20,10 +20,10 @@ spring:
     testOnReturn: false
     poolPreparedStatements: true
     # 配置监控统计拦截的filters,去掉监控界面sql无法统计，‘wall’用于防火墙 ,log4j
-    filters: stat,wall,log4j
+    filters: stat,wall
     maxPoolPreparedStatementPerConnectionSize: 20
     userGlobalDataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
 
-server:
-  port: 8080
+#server:
+#  port: 8080
