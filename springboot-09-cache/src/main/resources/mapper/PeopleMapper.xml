@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.jit.sose.mapper.PeopleMapper">
+    <resultMap id="BaseResultMap" type="org.jit.sose.entity.People">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="age" property="age" jdbcType="INTEGER"/>
+        <result column="weight" property="weight" jdbcType="DOUBLE"/>
+        <result column="birthday" property="birthday" jdbcType="DATE"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="lunch_date" property="lunchDate" jdbcType="TIMESTAMP"/>
+        <result column="dinner_date" property="dinnerDate" jdbcType="DATE"/>
+        <result column="is_delete" property="isDelete" jdbcType="BIT"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="created_date" property="createdDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, name, age, weight, birthday, price, lunch_date, dinner_date, is_delete, update_date, 
+    created_date
+  </sql>
+    <select id="listByPeople" parameterType="org.jit.sose.entity.People" resultMap="BaseResultMap">
+        SELECT
+            <include refid="Base_Column_List"/>
+        FROM
+            people
+        <where>
+            is_delete = TRUE
+            <if test="name != null">
+                AND LOCATE(#{name,jdbcType=VARCHAR}, `name`)
+            </if>
+            <if test="age != null">
+                AND age = #{age,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from people
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <update id="delete" parameterType="java.lang.Integer">
+		UPDATE people
+		SET is_delete = FALSE
+		WHERE
+			id = #{id,jdbcType=INTEGER}
+	</update>
+
+    <update id="deleteSelection" parameterType="java.util.List">
+        UPDATE people
+        SET is_delete = FALSE
+        WHERE
+        id IN
+        <foreach collection="list"  item="id"  index="index"
+                 separator="," open="(" close=")">
+            #{id,jdbcType=INTEGER}
+        </foreach>
+    </update>
+
+    <delete id="deleteReal" parameterType="java.lang.Integer">
+        delete from people
+        where id = #{id,jdbcType=INTEGER}
+      </delete>
+
+    <insert id="insert" parameterType="org.jit.sose.entity.People">
+        insert into people
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                name,
+            </if>
+            <if test="age != null">
+                age,
+            </if>
+            <if test="weight != null">
+                weight,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="lunchDate != null">
+                lunch_date,
+            </if>
+            <if test="dinnerDate != null">
+                dinner_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null">
+                #{age,jdbcType=INTEGER},
+            </if>
+            <if test="weight != null">
+                #{weight,jdbcType=DOUBLE},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=DATE},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="lunchDate != null">
+                #{lunchDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="dinnerDate != null">
+                #{dinnerDate,jdbcType=DATE},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="org.jit.sose.entity.People">
+        update people
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null">
+                age = #{age,jdbcType=INTEGER},
+            </if>
+            <if test="weight != null">
+                weight = #{weight,jdbcType=DOUBLE},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=DATE},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="lunchDate != null">
+                lunch_date = #{lunchDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="dinnerDate != null">
+                dinner_date = #{dinnerDate,jdbcType=DATE},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>
