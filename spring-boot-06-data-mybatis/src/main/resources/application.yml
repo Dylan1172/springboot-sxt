@@ -25,5 +25,9 @@ spring:
     userGlobalDataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
 
+#    schema:
+#      - classpath:sql/department.sql
+#      - classpath:sql/employee.sql
+
 #server:
 #  port: 8080
