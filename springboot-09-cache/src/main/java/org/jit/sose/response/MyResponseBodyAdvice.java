@@ -1,30 +1,40 @@
 package org.jit.sose.response;
 
-import org.jit.sose.constant.ResponseConstant;
 import lombok.extern.slf4j.Slf4j;
+import org.jit.sose.enums.ResponseEnum;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import java.io.File;
 
 @Slf4j
-@ControllerAdvice(basePackages = "org.jit.sose.controller")
+//@ControllerAdvice(basePackages = "org.jit.sose.controller")
+@ControllerAdvice(annotations = {RestController.class, Controller.class})
 @ResponseBody
 public class MyResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 
     /**
      * Jackson序列化框架序列化的是增强的结果对象，而不是Actioc中接口方法返回值代表的那个对象
+     * 统一对返回对象进行数据处理
      */
     @Override
     public Object beforeBodyWrite(Object obj, MethodParameter returnType, MediaType selectedContentType,
                                   Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request,
                                   ServerHttpResponse response) {
+        String returnTypeName = returnType.getParameterType().getName();
+        if ("void".equals(returnTypeName)) {
+            log.debug("返回值类型：" + returnTypeName);
+        }
+
         // 支付宝回调方法返回参数
         if ("success".equals(obj) || "fail".equals(obj)) {
             return obj;
@@ -39,9 +49,16 @@ public class MyResponseBodyAdvice implements ResponseBodyAdvice<Object> {
         }
         log.info("MyResponseBodyAdvice==>beforeBodyWrite:" + returnType + "," + obj);
         CommonResp resp = new CommonResp();
-        resp.setCode(ResponseConstant.SUCCESS);
-        resp.setMsg("请求成功");
+//        resp.setCode(ResponseConstant.SUCCESS);
+//        resp.setMsg("请求成功");
+        resp.setCode(ResponseEnum.SUCCESS.getCode());
+        resp.setMsg(ResponseEnum.SUCCESS.getMsg());
         resp.setObj(obj);
+
+//        Map<String, Object> map = (Map<String, Object>) obj;
+//        resp.setMsg((String) map.get("msg"));
+//        resp.setObj(map.get("obj"));
+
         obj = (Object) resp;
         return obj;
 
@@ -54,13 +71,12 @@ public class MyResponseBodyAdvice implements ResponseBodyAdvice<Object> {
      */
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
-
-//		log.debug("MyResponseBodyAdvice==>supports:" + converterType);
-//		log.debug("MyResponseBodyAdvice==>supports:" + returnType.getClass());
-//		log.debug("MyResponseBodyAdvice==>supports:"
-//				+ MappingJackson2HttpMessageConverter.class.isAssignableFrom(converterType));
-//		return MappingJackson2HttpMessageConverter.class.isAssignableFrom(converterType);
-        return true;
+        log.debug("MyResponseBodyAdvice==>supports:" + converterType);
+        log.debug("MyResponseBodyAdvice==>supports:" + returnType.getClass());
+        log.debug("MyResponseBodyAdvice==>supports:"
+                + MappingJackson2HttpMessageConverter.class.isAssignableFrom(converterType));
+        return MappingJackson2HttpMessageConverter.class.isAssignableFrom(converterType);
+//        return true;
     }
 
 }

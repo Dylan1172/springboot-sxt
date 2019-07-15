@@ -74,6 +74,10 @@ public class PeopleController {
 
     @PostMapping("/selectById")
     public People selectById(@RequestBody Integer id) {
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("msg", "query success");
+//        map.put("obj", peopleService.selectById(id));
+//        return map;
         return peopleService.selectById(id);
     }
 

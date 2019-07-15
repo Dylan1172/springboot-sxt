@@ -2,10 +2,12 @@ package org.jit.sose.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.jit.sose.entity.People;
 import org.jit.sose.mapper.PeopleMapper;
 import org.jit.sose.service.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.List;
  * @author: Dylan.W
  * @create: 2019-07-15 00:11:17
  */
+@Slf4j
 @Service
 public class PeopleServiceImpl implements PeopleService {
 
@@ -45,8 +48,10 @@ public class PeopleServiceImpl implements PeopleService {
         peopleMapper.update(record);
     }
 
+    @Cacheable(cacheNames = "people") //指定存储缓存组件的名字
     @Override
     public People selectById(Integer id) {
+        log.debug("缓存测试：" + id);
         return peopleMapper.selectById(id);
     }
 

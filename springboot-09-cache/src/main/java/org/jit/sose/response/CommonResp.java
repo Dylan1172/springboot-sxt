@@ -24,6 +24,7 @@ public class CommonResp {
     /**
      * 返回参数对象
      */
+//    private Object obj;
     private Object obj;
 
     public CommonResp(Integer code, String msg, Object obj) {
